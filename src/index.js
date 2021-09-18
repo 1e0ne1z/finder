@@ -12,8 +12,9 @@ sequelize.authenticate().then(() => {
 }).catch(err => {
   console.error('Unable to connect to the database:', err);
 });
+
 app.get('/', (req, res) => {
-  res.send('Hello World!')
+  res.send('Hello World, Caliman!')
 })
 
 app.listen(port, () => {
