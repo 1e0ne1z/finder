@@ -1,6 +1,7 @@
 const { Sequelize, DataTypes, Model } = require('sequelize');
 const sequelize = require('../db/sequelize')
 
+// Create class
 class User extends Model {}
 
 User.init({
@@ -36,4 +37,5 @@ User.init({
   modelName: 'User' // We need to choose the model name
 });
 
+//Export model for using in other files
 module.exports = User
