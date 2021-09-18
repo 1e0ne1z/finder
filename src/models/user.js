@@ -8,19 +8,44 @@ User.init({
   // Model attributes are defined here
   firstName: {
     type: DataTypes.STRING,
-    allowNull: true
+    allowNull: true,
+    validate : {
+      customValidator(value){
+        if(!this.isEnterprise && (value == null || value.length < 2 || value.length > 40)){
+          throw new Error('FirstName is mandatory');
+        }
+      }
+    }
   },
   lastName: {
     type: DataTypes.STRING,
-    allowNull: true
+    allowNull: true,
+    validate : {
+      customValidator(value){
+        if(!this.isEnterprise && (value == null || value.length < 2 || value.length > 40)){
+          throw new Error('LastName is mandatory');
+        }
+      }
+    }
   },
   enterpriseName: {
     type: DataTypes.STRING,
-    allowNull: true
+    allowNull: true,
+    validate : {
+      customValidator(value){
+        if(this.isEnterprise && (value == null || value.length < 2 || value.length > 40)){
+          throw new Error('EnterpriseName is mandatory');
+        }
+      }
+    }
   },
   email: {
     type: DataTypes.STRING,
-    allowNull: false
+    allowNull: false,
+    unique: true,
+    validate: {
+      isEmail: true
+    }
   },
   password: {
     type: DataTypes.TEXT,
