@@ -1,20 +1,14 @@
 const express = require('express')
+const userRouter = require('./routers/user')
+const sequelize = require('./db/sequelize')
 const User = require('./models/user')
 
 const app = express()
 const port = 3000
 
-app.get('/', (req, res) => {
-  res.send('Hello World, Caliman!')
-})
-
-User.sync({ alter: true }).then(result => {
-  console.log("The table for the User model was created")
-}).catch(err => {
-  console.log(err)
-})
-
+app.use(express.json())
+app.use(userRouter)
 
 app.listen(port, () => {
-  console.log(`Example app listening at http://localhost:${port}`)
+  console.log(`App is listening at http://localhost:${port}`)
 })
