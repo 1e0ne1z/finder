@@ -1,6 +1,8 @@
 const express = require('express')
 const User = require('../models/user') //Import model as User
 const router = new express.Router() // create new set of routes related to user model
+const jwt = require('jsonwebtoken')
+const auth = require('../middleware/auth')
 
 User.sync({ alter: true }).then(result => { //sync table with model attributes
   console.log("The table for the User model was created")
@@ -19,6 +21,33 @@ router.post('/users', async (req, res) => {
       res.status(400).send(err)
   }
 })
+
+// login route
+router.post('/users/login', async (req, res) => {
+  console.log(req.body)
+  try {
+      const user = await User.findOne({ where: {email: req.body.email, password: req.body.password}})
+      const token = await generateAuthToken(user)
+      res.send({ user, token })
+  } catch (e) {
+      res.status(400).send()
+  }
+})
+
+// get mi profile
+router.get('/users/me', auth, async (req, res) => {
+  res.send(req.user)
+})
+
+generateAuthToken = async function (user) {
+  
+  const token = jwt.sign({ id: user.id.toString() }, 'thisIsAwesome')
+
+  user.token = token
+  await user.save()
+
+  return token
+}
 
 //export set of routes
 module.exports = router

@@ -2,7 +2,8 @@ const { Sequelize, DataTypes, Model } = require('sequelize');
 const sequelize = require('../db/sequelize')
 
 // Create class
-class User extends Model {}
+class User extends Model {
+}
 
 User.init({
   // Model attributes are defined here
@@ -55,6 +56,9 @@ User.init({
     type: DataTypes.BOOLEAN,
     allowNull: false,
     defaultValue: false
+  },
+  token: {
+    type: DataTypes.STRING
   }
 }, {
   // Other model options go here
