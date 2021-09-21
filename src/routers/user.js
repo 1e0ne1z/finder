@@ -5,7 +5,7 @@ const jwt = require('jsonwebtoken')
 const auth = require('../middleware/auth')
 const bcrypt = require('bcryptjs')
 
-User.sync({ alter: true }).then(result => { //sync table with model attributes
+User.sync().then(result => { //sync table with model attributes
   console.log("The table for the User model was created")
 }).catch(err => {
   console.log(err)
@@ -39,6 +39,20 @@ router.post('/users/login', async (req, res) => {
 router.get('/users/me', auth, async (req, res) => {
   res.send(req.user)
 })
+
+//logout
+router.post('/users/logout', auth, async (req, res) => {
+  try {
+      req.user.token = ""
+
+      await req.user.save()
+
+      res.send()
+  } catch (e) {
+      res.status(500).send()
+  }
+})
+
 
 generateAuthToken = async function (user) {
   
