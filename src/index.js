@@ -3,7 +3,7 @@ var cors = require('cors');
 const userRouter = require('./routers/user') //import set of routes related to User
 
 const app = express()
-const port = 5000
+const port = 3001
 
 app.use(cors())
 app.use(express.json()) //set express to use JSON
